@@ -58,6 +58,10 @@ body {
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
 }
+
+.error{
+    color: var(--red-input-errors);
+}
 .cvc-card {
   position: absolute;
   top: 107px;
@@ -180,9 +184,16 @@ label {
   color: var(--very-dark-violet);
 }
 input {
+    outline: none;
   padding: 8px;
   border: 1px solid var(--light-grayish-violet);
   border-radius: 5px;
+}
+input:focus{
+    border: 2px solid var(--very-dark-violet);
+}
+.error-border{
+    border: 2px solid var(--red-input-errors);
 }
 .input-mm-yy-div {
   display: flex;
