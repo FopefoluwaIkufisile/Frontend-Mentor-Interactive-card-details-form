@@ -1,0 +1,1 @@
+const numberReveal = document.querySelector(".number-text")
