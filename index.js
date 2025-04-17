@@ -13,6 +13,9 @@ const year = document.querySelector("#year");
 const form = document.querySelector(".form");
 const thanks = document.querySelector(".thank-you");
 const continuee = document.querySelector(".continue");
+const date = new Date().getFullYear();
+
+const lastTwoDigits = Number(date.toString().split("").slice(2, 4).join(""));
 
 if (!localStorage.getItem("formdata")) {
   localStorage.setItem(
@@ -54,7 +57,7 @@ numberInput.addEventListener("input", (e) => {
 });
 
 fullName.addEventListener("input", () => {
-  nameReveal.textContent = fullName.value;
+  nameReveal.textContent = fullName.value.toUpperCase();
   const existingData = JSON.parse(localStorage.getItem("formdata")) || {};
   localStorage.setItem(
     "formdata",
@@ -128,9 +131,24 @@ const validdateErrors = () => {
   } else {
     removeErrors(numberInput);
   }
-
+  
+  if (!yearValue) {
+    setErrors(year, "Can't be blank");
+    isValid = false;
+  } else if (Number(yearValue) > lastTwoDigits + 10) {
+    setErrors(year, "Invalid Year");
+    isValid = false;
+  } else if (/[a-zA-Z]/.test(yearValue)) {
+    setErrors(year, "No letters!!");
+    isValid = false;
+  } else {
+    removeErrors(year);
+  }
   if (!monthValue) {
     setErrors(month, "Can't be blank");
+    isValid = false;
+  } else if (Number(monthValue) > 12) {
+    setErrors(month, "Invalid month");
     isValid = false;
   } else if (/[a-zA-Z]/.test(monthValue)) {
     setErrors(month, "No letters!!");
@@ -139,15 +157,6 @@ const validdateErrors = () => {
     removeErrors(month);
   }
 
-  if (!yearValue) {
-    setErrors(year, "Can't be blank");
-    isValid = false;
-  } else if (/[a-zA-Z]/.test(yearValue)) {
-    setErrors(year, "No letters!!");
-    isValid = false;
-  } else {
-    removeErrors(year);
-  }
   if (!cvcValue) {
     setErrors(cvc, "Can't be blank");
     isValid = false;
